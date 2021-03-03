@@ -1,0 +1,89 @@
+#include "std_lib_facilities.h"
+
+
+struct B1
+{
+	virtual void vf() {
+		cout << "B1::vf()\n";
+	}
+	void f(){
+		cout << "B1::f()\n";
+	}
+	virtual void pvf() {cout << "B1:pvf()\n";}
+};
+
+struct D1 : B1 
+{
+	void vf()  override {
+		cout << "D1::vf()\n";
+	}
+	void f() {
+		cout << "D1::f()\n";
+	}
+
+};
+
+struct D2 : D1 
+{
+    virtual void pvf() override { 
+    	cout << "D2::pvf()\n"; 
+    }
+};
+
+
+struct B2 {
+    virtual void pvf() =0;
+};
+
+struct D21 : B2{
+    string s = "string";
+
+    void pvf() override { 
+    	cout << s << '\n'; 
+    }
+};
+
+struct D22 : B2{
+    int i = 1;
+
+    void pvf() override {
+     	cout << i << '\n'; 
+ 	}
+};
+
+void f (B2& b)
+{
+    b.pvf();
+}
+
+
+
+int main()
+{
+	B1 b;
+	b.vf();
+	b.f();
+
+	D1 d;
+	d.vf();
+	d.f();
+
+	B1& reference {d};
+	reference.vf();
+	reference.f();
+
+	D2 dd;
+    dd.vf();
+    dd.f();
+    dd.pvf();
+
+    D21 one;
+    D22 two;
+
+    f(one);
+    f(two);
+
+
+return 0;
+
+}
